@@ -12,24 +12,33 @@ export function printConditionstoDropDown(conditionsJSON) {
 
 export function printDoctors(doctorJSON) {
   let output = '';
-  if(doctorJSON){
+  if(doctorJSON.meta.total !== 0){
     for (let i = 0; i < doctorJSON.data.length; i++) {
       let practiceInformationArray = doctorJSON.data[i].practices.map(function(practice) {
         let practiceName = practice.name;
         let newPatients = acceptsPatients(practice.accepts_new_patients);
         let phoneNumber = findLandline(practice.phones);
-        let website = practice.website;
-        let practiceAddress = practice.visit_address.street + "," + practice.visit_address.street2 + ',' + practice.visit_address.state + ',' + practice.visit_address.zip;
+        let website = validWebsite(practice.website);
+        let practiceAddress = secondSt(practice.visit_address);
         return [practiceName,website,newPatients,practiceAddress];
       });
       let practiceInformation = '';
-      practiceInformationArray.forEach(function(practice, i) {
-        practiceInformation += '<h4>' + i + '. <a href="'+website+'">' + practice[0] + '</a></h4><p>Accepting new patients: '+ practice[1] + "</p><p>"+practiceAddress+"</p>";
+
+      practiceInformationArray.forEach(function(practice, j) {
+        let number = j+1;
+        if(practice[1]){
+          practiceInformation += '<h4>' + number + '. <a href="'+practice[1]+'">' + practice[0] + '</a></h4><p>Accepting new patients: '+ practice[2] + "</p><p>"+practice[3]+"</p>";
+        }else{
+          practiceInformation += '<h4>' + number + '. '+ practice[0] + '</h4><p>Accepting new patients: '+ practice[2] + "</p><p>"+practice[3]+"</p>";
+        }
       });
-      let doctorName = doctorJSON.data[i].profile.first_name + " " + doctorJSON.data[i].visit_address.last_name;
+      debugger;
+      let doctorName = doctorJSON.data[i].profile.first_name + " " + doctorJSON.data[i].profile.last_name;
 
       output+= '<h3>' + doctorName + '</h3>' + practiceInformation;
     }
+  }else{
+    output = "No results for query."
   }
 
   return output;
@@ -56,4 +65,20 @@ function findLandline(phonesArray){
     }
   }
   return output;
+}
+
+function validWebsite(website){
+  if(website){
+    return website;
+  } else{
+    return '';
+  }
+}
+
+function secondSt(visit_addressObj){
+  if(visit_addressObj.street2){
+    return visit_addressObj.street + "," + visit_addressObj.street2 + ',' + visit_addressObj.state + ',' + visit_addressObj.zip;
+  } else{
+    return visit_addressObj.street + ',' + visit_addressObj.state + ',' + visit_addressObj.zip;
+  }
 }
