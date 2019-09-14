@@ -1,9 +1,9 @@
 export function getConditions() {
-  return new Promise(function(res, rej) {
+  return new Promise(function(resolve, reject) {
     let request = new XMLHttpRequest();
     let url = `https://api.betterdoctor.com/2016-03-01/conditions?user_key=${process.env.apiKey}`;
-    response.onLoad = function() {
-      if (this.stats === 200) {
+    request.onload = function() {
+      if (this.status === 200) {
         resolve(request.response);
       } else {
         reject(Error(request.statusText));
@@ -17,13 +17,16 @@ export function getConditions() {
 
 
 export function getDoctors(location, symptom) {
-  return new Promise(function(res, rej) {
+  return new Promise(function(resolve, reject) {
     let request = new XMLHttpRequest();
-    let url = `https://api.betterdoctor.com/2016-03-01/doctors?query=delivery&location=location0&limit=10&user_key=${process.env.apiKey}`;
-    response.onLoad = function() {
-      if (this.stats === 200) {
+    let url = `https://api.betterdoctor.com/2016-03-01/doctors?query=`+symptom+`&location=`+location+`&limit=10&user_key=${process.env.apiKey}`;
+    console.log(url);
+    request.onload = function() {
+      if (this.status === 200) {
+        console.log('resolved');
         resolve(request.response);
       } else {
+        console.log('rejected');
         reject(Error(request.statusText));
       }
     }
