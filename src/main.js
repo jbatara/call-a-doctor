@@ -5,11 +5,11 @@ import $ from 'jquery';
 
 
 $(document).ready(function() {
-  // getConditions().then(function(response) {
-  //   let body = JSON.parse(response);
-  //   console.log(body);
-  //   // $('span.symptoms').html(printConditionstoDropDown(body));
-  // });
+  getConditions().then(function(response) {
+    let body = JSON.parse(response);
+    console.log(body);
+    $('span.symptoms').html(printConditionstoDropDown(body));
+  });
 
   $('.findDoctor').submit(function(event) {
     event.preventDefault();
