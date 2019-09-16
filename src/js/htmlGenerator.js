@@ -10,6 +10,18 @@ export function printConditionstoDropDown(conditionsJSON) {
   return output;
 }
 
+export function printSpecialtiestoDropDown(specialtiesJSON) {
+  let output = '<datalist id="specialties">';
+  for(let i=0; i<specialtiesJSON.data.length;i++){
+    if(specialtiesJSON.data[i].active){
+      let specialty = specialtiesJSON.data[i].uid;
+      output += '<option value='+specialty+'>';
+    }
+  }
+  output += '</datalist>';
+  return output;
+}
+
 export function printDoctors(doctorJSON) {
   let output = '';
   if(doctorJSON.meta.total !== 0){
