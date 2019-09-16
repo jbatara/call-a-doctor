@@ -1,26 +1,58 @@
-import {getConditions,getDoctors} from './js/promises.js';
-import {printConditionstoDropDown,printDoctors} from './js/htmlGenerator.js';
 import $ from 'jquery';
-
-
+import {
+  getConditions,
+  getSpecialties,
+  getDoctors
+} from './js/promises.js';
+import {
+  printConditionstoDropDown,
+  printSpecialtiestoDropDown,
+  printDoctors
+} from './js/htmlGenerator.js';
+import 'bootstrap';
+import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './css/styles.css';
 
 $(document).ready(function() {
-  getConditions().then(function(response) {
-    let body = JSON.parse(response);
-    console.log(body);
-    $('span.symptoms').html(printConditionstoDropDown(body));
+
+  $('#symptomShow').click(function() {
+    $('form').not('#findSymptom').hide();
+    $('#findSymptom').show();
+    getConditions().then(function(response) {
+      let body = JSON.parse(response);
+      $('span.symptoms').html(printConditionstoDropDown(body));
+    });
   });
 
-  $('.findDoctor').submit(function(event) {
-    event.preventDefault();
+  $('#specialtyShow').click(function() {
+    $('form').not('#findSpecialty').hide();
+    $('#findSpecialty').show();
 
+    getSpecialties().then(function(response) {
+      let body = JSON.parse(response);
+      console.log(body);
+      $('span.specialty').html(printSpecialtiestoDropDown(body));
+    });
+  })
+
+  $('#findDoctor').submit(function(event) {
+    event.preventDefault();
     let location = $('#location').val();
-    console.log(location);
     let symptom = $('input[name=symptom]').val();
-    console.log(symptom);
 
     getDoctors(location, symptom).then(function(response) {
+      let body = JSON.parse(response);
+      console.log(body);
+      $('.doctors').html(printDoctors(body));
+    });
+  });
 
+  $('#findSymptom').submit(function(event) {
+    event.preventDefault();
+    let location = $('#location').val();
+    let symptom = $('input[name=symptom]').val();
+
+    getDoctors(location, symptom).then(function(response) {
       let body = JSON.parse(response);
       console.log(body);
       $('.doctors').html(printDoctors(body));

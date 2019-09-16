@@ -44,7 +44,6 @@ export function printDoctors(doctorJSON) {
           practiceInformation += '<h4>' + number + '. '+ practice[0] + '</h4><p>Accepting new patients: '+ practice[2] + "</p><p>"+practice[3]+"</p>";
         }
       });
-      debugger;
       let doctorName = doctorJSON.data[i].profile.first_name + " " + doctorJSON.data[i].profile.last_name;
 
       output+= '<h3>' + doctorName + '</h3>' + practiceInformation;
@@ -52,14 +51,8 @@ export function printDoctors(doctorJSON) {
   }else{
     output = "No results for query."
   }
-
   return output;
 }
-
-
-  //obj.data[i].practices.name
-  //obj.data[i].visit_address.street, street2, state, zip
-
 
 function acceptsPatients(boolean){
   if(boolean){

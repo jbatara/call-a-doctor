@@ -7,12 +7,32 @@
   <body>
     <h1>Need help finding a doctor?</h1>
     <p>You've come to the <span>right</span> place!</p>
-    <form class="findDoctor">
+    <p>Find a doctor by:</p>
+    <button id='symptomShow' type='button' class='btn btn-primary'>Symptom</button>
+    <button button id='specialtyShow' type='button' class='btn btn-primary'>Specialty</button>
+    <button type="button" button id='doctorNameShow' class='btn btn-primary'>Doctor Name</button>
+    <form id="findSymptom">
       <label for="location">Location</label>
       <input type="text" id='location'>
       <label for="symptom">Symptom</label>
       <input list="symptoms" name='symptom'>
       <span class='symptoms'></span>
+      <button type='submit'>Find me a doctor!</button>
+    </form>
+    <form id="findDoctor">
+      <!-- <label for="location">Location</label>
+      <input type="text" id='location'>
+      <label for="symptom">Symptom</label>
+      <input list="symptoms" name='symptom'>
+      <span class='symptoms'></span>
+      <button type='submit'>Find me a doctor!</button> -->
+    </form>
+    <form id="findSpecialty">
+      <label for="location">Location</label>
+      <input type="text" id='location'>
+      <label for="specialty">Specialty</label>
+      <input list="specialties" name='specialty'>
+      <span class='specialty'></span>
       <button type='submit'>Find me a doctor!</button>
     </form>
     <div class='error'>
